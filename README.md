@@ -1,4 +1,4 @@
-# Template: Receive Salesforce Outbound Message to Google Sheet row
+# Template: Add Received Salesforce Outbound Message to Google Sheet row
 When new Outbound Message is received from Salesforce, add new row to a Google Sheet.<br>
 
 We can make our day-to-day information organized with the help of Google Sheets. But creating layouts and formatting a
