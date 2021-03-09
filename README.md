@@ -28,7 +28,6 @@ Salesforce.
 - Set up the template. 
 
 # Developer Guide
-
 <p align="center">
 <img src="./docs/images/template_flow.png?raw=true" alt="Salesforce-GSheet Integration template overview"/>
 </p>
@@ -60,15 +59,15 @@ Salesforce.
 * Salesforce account
 * Google Cloud Platform account
 
-## Configuration
-### Setup Outbound Message in Salesforce console.
+## Account Configuration
+### Setup Outbound Message in Salesforce console
 1. Setup a new `Outbound Message` in Salesforce visiting `Service Setup` dropdown menu. More information on setting up 
 outbound messages can be found [here](https://developer.salesforce.com/docs/atlas.en-us.api.meta/api/sforce_api_om_outboundmessaging_setting_up.htm).
 2. Setup a new `Workflow Rule`or select an already existing `Workflow Rule`. More information on this can
 be found [here](https://help.salesforce.com/articleView?id=sf.workflow_rules_new.htm&type=5).
 3. Link the `Outbound Message` created in [1] to the `Workflow Rule`.
 
-### Setup Google Sheets Configurations
+###  Configuration steps for Google Sheets account
 Create a Google account and create a connected app by visiting [Google cloud platform APIs and Services](https://console.cloud.google.com/apis/dashboard). 
 
 1. Click `Library` from the left side bar.
@@ -88,8 +87,7 @@ Select OAuth client Id.
 12. Exchange Auth code for tokens.
 13. Copy `access token` and `refresh token`. Put it on the config(Config.toml) file.
 
-## Configuring the Integration Template
-
+## Template Configuration
 1. Create new spreadsheet.
 2. Rename the sheet if you want.
 3. Get the ID of the spreadsheet.  
@@ -99,7 +97,7 @@ Select OAuth client Id.
 6. Once you obtained all configurations, Create `Config.toml` in root directory.
 7. Replace the necessary fields in the `Config.toml` file with your data.
 
-### Config.toml 
+## Config.toml 
 ```
 [<ORG_NAME>.sdfc_outbound_msg_to_gsheet]
 sheets_spreadsheet_id = "<SPREADSHEET_ID>"
@@ -110,7 +108,6 @@ sheets_client_secret = "<CLIENT_SECRET>"
 ``` 
 
 ## Running the Template
-
 1. First you need to build the integration template and create the executable binary. Run the following command from the 
 root directory of the integration template. 
 `$ bal build`. 
