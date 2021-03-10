@@ -7,3 +7,6 @@ const NOTIFICATION_ID = "Notification ID";
 # Empty string
 const EMPTY_STRING = "";
 const SF_NAMESPACE_REGEX = "sf:";
+
+const HEADER_ROW = 1;
+
