@@ -3,24 +3,14 @@ import ballerina/jsonutils;
 import ballerina/regex;
 import ballerinax/googleapis_sheets as sheets;
 
-configurable string sheets_refresh_token = ?;
-configurable string sheets_client_id = ?;
-configurable string sheets_client_secret = ?;
-configurable string sheets_spreadsheet_id = ?;
-configurable string sheets_worksheet_name = ?;
+configurable string & readonly sheetId = ?;
+configurable string & readonly workSheetName = ?;
+configurable int & readonly port = ?;
+configurable sheets:SpreadsheetConfiguration & readonly spreadsheetConfig = ?;
 
-sheets:SpreadsheetConfiguration spreadsheetConfig = {
-    oauthClientConfig: {
-        clientId: sheets_client_id,
-        clientSecret: sheets_client_secret,
-        refreshUrl: sheets:REFRESH_URL,
-        refreshToken: sheets_refresh_token
-    }
-};
+sheets:Client spreadsheetClient = check new (spreadsheetConfig);
 
-sheets:Client spreadsheetClient = checkpanic new (spreadsheetConfig);
-
-service / on new http:Listener(8080) {
+service / on new http:Listener(port) {
     resource function post subscriber(http:Caller caller, http:Request request) returns error? {
         xml payload = check request.getXmlPayload();
 
@@ -50,7 +40,6 @@ function addRowToGoogleSheet(json idObject, json contactInfoObject) returns erro
     string idString = let var id = idObject.Id.Id in id is json ? id.toString() : EMPTY_STRING;
     infoArray.push(idString);
     headerArray.push(NOTIFICATION_ID);
-
     json[] contactInfoArray = <json[]>contactInfoObject;
     foreach var item in contactInfoArray {
         map<json> itemMap = <map<json>>item;
@@ -61,9 +50,9 @@ function addRowToGoogleSheet(json idObject, json contactInfoObject) returns erro
             headerArray.push(replacedString);
         }
     }
-    var headers = spreadsheetClient->getRow(sheets_spreadsheet_id, sheets_worksheet_name, HEADER_ROW);
+    var headers = spreadsheetClient->getRow(sheetId, workSheetName, HEADER_ROW);
     if(headers == []){
-        _ = check spreadsheetClient->appendRowToSheet(sheets_spreadsheet_id, sheets_worksheet_name, headerArray);
+        _ = check spreadsheetClient->appendRowToSheet(sheetId, workSheetName, headerArray);
     }
-    _ = check spreadsheetClient->appendRowToSheet(sheets_spreadsheet_id, sheets_worksheet_name, infoArray);
+    _ = check spreadsheetClient->appendRowToSheet(sheetId, workSheetName, infoArray);
 }

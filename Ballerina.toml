@@ -1,6 +1,6 @@
 [package]
 org = "sachinira"
-name = "sdfc_outbound_msg_to_gsheet"
+name = "sfdc_outbound_msg_to_gsheet"
 version = "0.1.0"
 
 [build-options]
